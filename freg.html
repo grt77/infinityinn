@@ -1,0 +1,197 @@
+ <head>
+ <title>Registeration Form</title>
+ 
+ <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <style>
+  body {
+    position: relative; 
+  }
+  .column-in-center{
+    float: none;
+    margin: 0 auto;
+  }
+  
+  
+  .footer {
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color:#d8ffd6;
+   text-align: center;
+   color:#000000;
+  }
+  </style>
+</head>
+<body>
+  
+<div class="page-header text-center" style="margin-bottom:0;font-family:HelvLight Medium;">
+  <h1 style="font-weight:bold;">INFINITY INN.,</h1>
+  <h4>Bed and Breakfast!</h4> 
+</div>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid"
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>    
+		  <span class="icon-bar"></span>  
+      </button>
+    </div>
+    <div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li><a href="home.html">ABOUT</a></li>
+          <li><a href="home.html">SERVICES</a></li>
+		  <li><a href="fgallery.html">GALLERY</a></li>
+		 </ul>
+          <ul class="nav navbar-nav navbar-right">
+      <li><a href="freg.html"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+      <li><a href="flogin.html"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+    </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+
+ <style>
+* {box-sizing: border-box}
+
+/* Add padding to containers */
+.container {
+  padding: 16px;
+}
+  body{font-family:Arial;}
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  width: 50%;
+  padding: 10px;
+  margin: 5px 0 22px 25em;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #ddd;
+  font-family: Arial;
+  outline: none;
+}
+
+/* Overwrite default styles of hr */
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+.myDiv {
+    position: relative;
+    z-index: 1;
+}
+
+.myDiv:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: url("dinecrop.jpg");
+    opacity: .4;
+}
+
+
+/* Set a style for the submit/register button */
+.registerbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  margin-left: 620px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.9;
+}
+
+.registerbtn:hover {
+  opacity:1;
+}
+
+/* Add a blue text color to links */
+a {
+  color: dodgerblue;
+}
+
+/* Set a grey background color and center the text of the "sign in" section */
+.signin {
+  background-color: #f1f1f1;
+  text-align: center;
+}
+
+
+</style>
+</head>
+<div class="myDiv">
+ <form action="reg.php" method="post">
+  <div class="container">
+    <h1 style="text-align:center;">Register</h1>
+    <hr style="margin-left:25em;margin-right:25em">
+
+    <label for="fname"></label>
+    <input type="text" placeholder="Enter First name" name="fname" required><br>
+	
+	<label for="lname"></label>
+    <input type="text" placeholder="Enter Last name" name="lname" required><br>
+	<input type="text" placeholder="Enter your Birth year" name="age" required><br>
+	<label for="email"></label>
+    <input type="text" placeholder="Enter Email" name="email" required><br>
+
+     
+    <label for="psw"></label>
+    <input type="password" placeholder="Enter Password" name="psw" required><br>
+
+    <label for="psw-repeat"></label>
+    <input type="password" placeholder="Confirm Password" name="psw-repeat" required><br>
+	
+	
+    <label for="aad"></label>
+    <input type="text" placeholder="Enter Aadhar number" name="aad" required><br>
+	 <input type="text" placeholder="Enter Phone number" name="phno" required><br>
+    
+     <p style="font-size:12px;color:000000;margin-left:334px;padding:7px;">
+    Gender &emsp;&emsp;&emsp;&emsp;<input type="radio" name="gender" value="male"> Male
+    <input type="radio" name="gender" value="female"> Female
+      <input type="radio" name="gender" value="other"> Other<br></p>
+    
+   
+  
+<div class="form-group">
+	<p style="text-align:center;"><b>By signing up you are accepting our </b><a href="#"><b>Terms and Conditions</b></a></p>
+	</div>
+    <div class="form-group" style="text-align:center;">        
+      <div class="form-group">
+        <button type="submit" class="btn btn-success btn-default">Register</button>
+      </div>
+    </div>
+	<div class="form-group">
+	<p style="text-align:center;"><b>Already have an account? </b><a href="flogin.html">Log in</a></p>
+	</div>
+	
+</div>
+</div>
+
+  </form>
+ 
+<br>
+<div class="footer">
+  <h1 style="text-align:center;font-family:Calibri;font-size:40px;color:#000000;">Contact</h1>
+  <p style="font-size:20px;font-family:Calibri;">Email: sluvvy@gmail.com &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Mobile: +918886032772</p>
+</div>
+
+</body>
+</html>
