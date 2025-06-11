@@ -208,3 +208,79 @@ except Exception as e:
 
 # Stop Spark session
 spark.stop()
+
+
+
+
+from pyspark.sql import SparkSession
+import subprocess
+import os # Import os for potential environment variables
+
+# Initialize Spark session
+spark = SparkSession.builder.appName("SendHTMLEmail").getOrCreate()
+
+# HTML content (example, can be dynamically generated)
+html_content = """
+<html>
+  <body>
+    <h1>Test Email from PySpark</h1>
+    <p>This is a <b>bold</b> HTML email sent using the mail command!</p>
+  </body>
+</html>
+"""
+
+# Email details
+recipient = "recipient@example.com" # REPLACE WITH A REAL RECIPIENT FOR TESTING
+subject = "Test Email from PySpark"
+
+# The structure of the email content for 'mail -t' is crucial.
+# It expects RFC 822 formatted message.
+email_message = f"""From: PySpark Sender <no-reply@yourcompany.com>
+To: {recipient}
+Subject: {subject}
+Content-Type: text/html; charset="UTF-8"
+MIME-Version: 1.0
+
+{html_content}
+"""
+
+# Define the mail command
+# -t reads To:, Cc:, Bcc: headers from stdin
+# -s for subject can be used, but since we're piping, it's better to put in headers
+command = ["mail", "-t"] # Using -t is good here
+
+try:
+    print(f"Attempting to send email to: {recipient} with subject: {subject}")
+    # print(f"Email content being sent:\n{email_message}") # Uncomment for debugging
+
+    # Execute mail command and pipe email content
+    process = subprocess.Popen(
+        command,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        # text=True is often safer if you're directly passing a string
+        # and letting Python handle encoding. Let's try that.
+        text=True # This means input must be a string, and Python handles encoding (UTF-8 by default)
+    )
+    # The 'input' parameter expects a string when text=True
+    stdout, stderr = process.communicate(input=email_message)
+
+    if process.returncode == 0:
+        print("Email sent successfully")
+        if stdout:
+            print(f"Mail command stdout: {stdout.strip()}")
+    else:
+        print(f"Failed to send email. Return code: {process.returncode}")
+        if stdout:
+            print(f"Mail command stdout: {stdout.strip()}")
+        if stderr:
+            print(f"Mail command stderr: {stderr.strip()}")
+
+except FileNotFoundError:
+    print("Error: 'mail' command not found. Make sure it's installed and in your PATH.")
+except Exception as e:
+    print(f"Error sending email: {str(e)}")
+
+# Stop Spark session
+spark.stop()
