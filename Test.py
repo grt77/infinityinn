@@ -284,3 +284,8 @@ except Exception as e:
 
 # Stop Spark session
 spark.stop()
+
+
+
+mailx -a "Content-Type: text/html" -s "Your Subject" recipient@example.com < email_body.html
+
