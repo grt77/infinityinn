@@ -155,3 +155,56 @@ def compare_enhancement_methods_automated(image_path):
 compare_enhancement_methods_automated("1.jpg")
 # compare_enhancement_methods_automated("IMG_5073.jpg")
 # compare_enhancement_methods_automated("IMG_5072.jpg")
+
+
+
+
+from pyspark.sql import SparkSession
+import subprocess
+
+# Initialize Spark session
+spark = SparkSession.builder.appName("SendHTMLEmail").getOrCreate()
+
+# HTML content (example, can be dynamically generated)
+html_content = """
+<html>
+  <body>
+    <h1>Test Email from PySpark</h1>
+    <p>This is a <b>bold</b> HTML email sent using the mail command!</p>
+  </body>
+</html>
+"""
+
+# Email details
+recipient = "recipient@example.com"
+subject = "Test Email from PySpark"
+email_content = f"""To: {recipient}
+Subject: {subject}
+Content-Type: text/html
+
+{html_content}
+"""
+
+# Define the mail command
+command = ["mail", "-t"]
+
+try:
+    # Execute mail command and pipe email content
+    process = subprocess.Popen(
+        command,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=False  # Use bytes for compatibility
+    )
+    stdout, stderr = process.communicate(input=email_content.encode())
+    
+    if process.returncode == 0:
+        print("Email sent successfully")
+    else:
+        print(f"Failed to send email: {stderr.decode()}")
+except Exception as e:
+    print(f"Error sending email: {str(e)}")
+
+# Stop Spark session
+spark.stop()
