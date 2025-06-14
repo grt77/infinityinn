@@ -1,4 +1,39 @@
-import cv2
+
+
+
+
+#!/bin/bash
+
+# Path to config 
+
+# Check if config file exists
+if [ ! -f "$CONFIG_FILE" ]; then
+    echo "Error: Config file $CONFIG_FILE not found"
+    exit 1
+fi
+
+# Read token from config file
+TOKEN=$(awk -F'=' '/token/ {print $2}' "$CONFIG_FILE" | tr -d '[:space:]')
+
+if [ -z "$TOKEN" ]; then
+    echo "Error: Token not found in config file"
+    exit 1
+fi
+
+# URL to call (replace with your actual URL)
+URL="https://your-api-endpoint.com"
+
+# Make curl request
+RESPONSE=$(curl -s -H "Authorization: Bearer $TOKEN" "$URL")
+
+# Check if response contains error: false
+if echo "$RESPONSE" | grep -q '"error": *false'; then
+    echo "Request successful: error is false"
+else
+    echo "Request failed: error is not false"
+    echo "Response: $RESPONSE"
+    exit 1
+fiimport cv2
 import numpy as np
 import matplotlib.pyplot as plt
 from skimage.restoration import denoise_wavelet
