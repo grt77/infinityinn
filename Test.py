@@ -1,3 +1,41 @@
+curl -X POST \
+https://your-domain.atlassian.net/rest/api/3/issue \
+-H "Authorization: Basic <base64-encoded-email:api-token>" \
+-H "Content-Type: application/json" \
+--data '{
+  "fields": {
+    "project": {
+      "key": "<PROJECT_KEY>"
+    },
+    "parent": {
+      "key": "BFD-687"
+    },
+    "summary": "Your Subtask Summary",
+    "description": {
+      "type": "doc",
+      "version": 1,
+      "content": [
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "Description of the subtask"
+            }
+          ]
+        }
+      ]
+    },
+    "issuetype": {
+      "name": "Sub-task"
+    }
+  }
+}'
+
+
+
+
+
 curl --request POST \
   --url 'https://your-jira-instance.atlassian.net/rest/api/2/issue' \
   --user 'your_email@example.com:YOUR_ATLASSIAN_JIRA_TOKEN' \
