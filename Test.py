@@ -1,6 +1,71 @@
 import datetime
 import pandas as pd
 
+def df_to_html_table(df, thresholds, exclude_keys_by_day, jira_link):
+    try:
+        html = "<table border='1' cellpadding='8' style='border-collapse:collapse; width:100%'>\n"
+        html += "<tr style='white-space: nowrap;'>"
+        for col in df.columns:
+            html += (f"<th style='border:4px solid #ccc; padding:8px;"
+                     f"background-color:#004080;color:white;text-align:center;'>{col.upper()}</th>")
+        html += "</tr>"
+
+        today_day = datetime.datetime.today().strftime('%A')
+        excluded_keys = exclude_keys_by_day.get(today_day, [])
+
+        failed_keys = []
+
+        for _, row in df.iterrows():
+            key = str(row.get('key')).strip()
+            raw_matchrate = str(row.get('matchrate', '')).replace('~', '').replace('%', '').strip()
+
+            try:
+                matchrate_value = float(raw_matchrate)
+            except ValueError:
+                matchrate_value = None  # Treat as bad if unparseable
+
+            is_failed = False
+            if key not in excluded_keys:
+                threshold = thresholds.get(key)
+                if threshold is not None and matchrate_value is not None and matchrate_value < threshold:
+                    is_failed = True
+                    failed_keys.append(key)
+
+            bg_color = "#ffdddd" if is_failed else "#ffffff"
+
+            html += "<tr>"
+            for col in df.columns:
+                val = row[col]
+                temp = str(val).upper() if val is not None else ''
+                html += (f"<td style='border:2px solid #ccc; padding:8px;"
+                         f"background-color:{bg_color};text-align:center;'>{temp}</td>")
+            html += "</tr>"
+
+        html += "</table>"
+
+        # Final summary message
+        if failed_keys:
+            msg = (f"<p style='color:red;font-weight:bold;'>The following keys are below threshold: "
+                   f"{', '.join(failed_keys)}<br>"
+                   f"Track the resolution step using this JIRA link: <a href='{jira_link}'>{jira_link}</a></p>")
+        else:
+            msg = ("<p style='color:green;font-weight:bold;'>All keys are under Match Rate Threshold ✅</p>")
+
+        html += msg
+        return html
+
+    except Exception as e:
+        raise Exception(str(e))
+
+
+
+
+
+
+
+import datetime
+import pandas as pd
+
 def df_to_html_table(df, thresholds, exclude_keys_by_day):
     try:
         html = "<table border='1' cellpadding='8' style='border-collapse:collapse; width:100%'>\n"
