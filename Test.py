@@ -1,17 +1,3 @@
-# Match rate t
-# Keys excluded on specific days
-exclude_keys_by_day = {
-    'Monday': [],
-    'Tuesday': ['COOKIE'],  # e.g., skip COOKIE on Tuesday
-    'Wednesday': [],
-    'Thursday': [],
-    'Friday': [],
-    'Saturday': [],
-    'Sunday': []
-}
-
-jira_link = "https://yourcompany.atlassian.net/browse/BFDS-586"
-
 
 
 
