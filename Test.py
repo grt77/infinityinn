@@ -1,3 +1,11 @@
+curl -X GET \
+  -H "Authorization: Basic $(echo -n 'your_email@example.com:your_api_token' | base64)" \
+  -H "Content-Type: application/json" \
+  "https://yourcompany.atlassian.net/rest/api/2/issue/createmeta?projectKeys=BFDS&issuetypeNames=Sub-task&expand=projects.issuetypes.fields"
+
+
+
+
 curl -X POST \
 https://your-domain.atlassian.net/rest/api/2/issue \
 -H "Authorization: Basic <base64-encoded-email:api-token>" \
