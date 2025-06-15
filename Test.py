@@ -1,3 +1,31 @@
+# Match rate thresholds per key
+thresholds = {
+    'ACCOUNT': 85,
+    'ADDRESS': 85,
+    'COOKIE': 50,
+    'DEVICE': 70,
+    'EMAIL': 60,
+    'PARTY': 90,
+    'PHONE': 90,
+    'SSN': 90
+}
+
+# Keys excluded on specific days
+exclude_keys_by_day = {
+    'Monday': [],
+    'Tuesday': ['COOKIE'],  # e.g., skip COOKIE on Tuesday
+    'Wednesday': [],
+    'Thursday': [],
+    'Friday': [],
+    'Saturday': [],
+    'Sunday': []
+}
+
+jira_link = "https://yourcompany.atlassian.net/browse/BFDS-586"
+
+
+
+
 import datetime
 import pandas as pd
 
