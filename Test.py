@@ -1,3 +1,49 @@
+import datetime
+import pandas as pd
+
+def df_to_html_table(df, thresholds, exclude_keys_by_day):
+    try:
+        html = "<table border='1' cellpadding='8' style='border-collapse:collapse; width:100%'>\n"
+        html += "<tr style='white-space: nowrap;'>"
+        for col in df.columns:
+            html += (f"<th style='border:4px solid #ccc; padding:8px;"
+                     f"background-color:#004080;text-align:center;'>{col.upper()}</th>")
+        html += "</tr>"
+
+        # Get today's day name (e.g., 'Tuesday')
+        today_day_name = datetime.datetime.today().strftime('%A')
+        today_excluded_keys = exclude_keys_by_day.get(today_day_name, [])
+
+        for _, row in df.iterrows():
+            is_failed = str(row.get('status', '')).lower() == 'failed'
+            key = row.get('key')
+            matchrate = row.get('matchrate')
+
+            # Check if we should exclude this key for today
+            if key in today_excluded_keys:
+                bg_color = "#ffffff"
+            elif key in thresholds and pd.to_numeric(matchrate, errors='coerce') < thresholds[key]:
+                bg_color = "#ffdddd"
+            else:
+                bg_color = "#BB0000" if is_failed else "#ffffff"
+
+            html += "<tr>"
+            for col in df.columns:
+                temp = str(row[col]).upper() if row[col] is not None else ''
+                html += (f"<td style='border:2px solid #ccc; padding:8px;"
+                         f"background-color:{bg_color};text-align:center;'>{temp}</td>")
+            html += "</tr>"
+
+        html += "</table>"
+        return html
+    except Exception as e:
+        raise Exception(str(e))
+
+
+
+
+
+
 curl -X GET \
   -H "Authorization: Basic $(echo -n 'your_email@example.com:your_api_token' | base64)" \
   -H "Content-Type: application/json" \
