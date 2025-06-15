@@ -1,4 +1,30 @@
-
+curl --request POST \
+  --url 'https://your-jira-instance.atlassian.net/rest/api/2/issue' \
+  --user 'your_email@example.com:YOUR_ATLASSIAN_JIRA_TOKEN' \
+  --header 'Accept: application/json' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "fields": {
+      "project": {
+        "key": "B"
+      },
+      "parent": {
+        "key": "B-586"
+      },
+      "summary": "Implement feature X for subtask in BFDS-586",
+      "description": "This subtask covers the implementation details for feature X related to the main task BFDS-586.",
+      "issuetype": {
+        "name": "Sub-task"
+      },
+      "assignee": {
+        "accountId": "your_assignee_account_id"
+      },
+      "reporter": {
+        "accountId": "your_reporter_account_id"
+      }
+    }
+  }' \
+  --compressed
 
 
 
