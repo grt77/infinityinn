@@ -1,4 +1,28 @@
 curl -X POST \
+https://your-domain.atlassian.net/rest/api/2/issue \
+-H "Authorization: Basic <base64-encoded-email:api-token>" \
+-H "Content-Type: application/json" \
+--data '{
+  "fields": {
+    "project": {
+      "key": "<PROJECT_KEY>"
+    },
+    "parent": {
+      "key": "BFD-687"
+    },
+    "summary": "Subtask for BFD-687",
+    "description": "Description of the subtask",
+    "issuetype": {
+      "name": "Sub-task"
+    }
+  }
+}'
+
+
+
+
+
+curl -X POST \
 https://your-domain.atlassian.net/rest/api/3/issue \
 -H "Authorization: Basic <base64-encoded-email:api-token>" \
 -H "Content-Type: application/json" \
