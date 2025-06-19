@@ -1,4 +1,34 @@
 
+import os
+import json
+
+folder_path = "/path/to/your/json/files"  # Update this to your folder
+required_classes = {"ChqNo", "DateIss", "Amt", "AcNo"}
+result = {}
+
+for filename in os.listdir(folder_path):
+    if filename.endswith(".json"):
+        file_path = os.path.join(folder_path, filename)
+        with open(file_path, 'r') as f:
+            data = json.load(f)
+
+        # Clean metadata name
+        raw_name = data.get("metadata", {}).get("name", "")
+        cleaned_key = raw_name.replace(".png", "").replace(" ", "").lower()
+
+        # Collect required bbox class points
+        class_points = {}
+        for instance in data.get("instances", []):
+            if instance.get("type") == "bbox":
+                class_name = instance.get("className")
+                if class_name in required_classes:
+                    class_points[class_name] = instance.get("points")
+
+        if class_points:
+            result[cleaned_key] = class_points
+
+# Print or use result
+print(json.dumps(result, indent=2))
 
 
 import datetime
